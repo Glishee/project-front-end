@@ -1,0 +1,7 @@
+<div class="category-view-container">
+  <div *ngFor="let c of categories" class="category-card" (click)="chooseGame(c)">
+    <app-category-card [currentCategory]="c" [wasClicked]="selectedCategory[c.id] || false"></app-category-card>
+  </div>
+</div>
+
+

@@ -1,0 +1,15 @@
+<div style="text-align: center;">
+  <h1>Translate - {{ category }}</h1>
+  <div *ngFor="let word of words">
+    <div>
+      <mat-label>Origin:</mat-label>  {{ word.origin }} <mat-form-field><mat-label>Target:</mat-label> <input matInput type="text" [(ngModel)]="word.target"></mat-form-field>
+      <span *ngIf="word.correct" class="correct">&#10003;</span>
+      <span *ngIf="!word.correct" class="incorrect">&#10007;</span>
+    </div>
+  </div>
+  <br>
+  <button mat-raised-button color="primary" (click)="checkTranslations()">Check</button>
+  <button mat-raised-button color="warn" (click)="translateWords()">Translate</button> 
+  <br>
+  <p>Correct Answers: {{ correctCount }} out of {{ words.length }}</p> 
+</div>

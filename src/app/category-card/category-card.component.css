@@ -1,0 +1,7 @@
+.card-container {
+  min-height: 68px;
+ }
+ .star {
+  color: gold; /* Жёлтый цвет */
+  margin-left: 5px; /* Небольшой отступ слева */
+}

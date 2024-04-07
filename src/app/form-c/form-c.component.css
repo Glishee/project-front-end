@@ -1,0 +1,48 @@
+
+form {
+  max-width: 400px;
+  margin: auto;
+}
+
+
+div {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center; 
+}
+
+
+mat-label {
+  font-weight: bold;
+}
+
+
+mat-form-field {
+  width: 100%;
+}
+
+
+input.mat-input {
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+
+button.mat-raised-button {
+  background-color: #4caf50; 
+  color: white; 
+}
+
+
+button.mat-icon-button {
+  color: #f44336; 
+
+
+mat-error {
+  color: #f44336; 
+  font-size: 12px;
+}
+button.mat-icon-button {
+  color: #f44336; 
+  margin-left: 10px; 
+}
