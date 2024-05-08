@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input'
 import {MatDividerModule} from '@angular/material/divider';
 import { CategoryService } from '../../Services/category.service'
 import { Category1 } from '../../shared/model/Category1'
+import { Language } from '../../shared/model/Language'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { GamePlayed } from '../../shared/model/GamePlayed'
 import { GameService } from '../../Services/game.service'
@@ -41,7 +42,7 @@ export class MixedGameComponent {
   
 
   constructor(private categoryService: CategoryService,
-    ) {}
+    private gameService: GameService) {}
 
     ngOnInit(): void {
       if (this.id) {
@@ -62,9 +63,9 @@ export class MixedGameComponent {
   
   
     shuffleString(input: string): string {
-      const characters = input.split('');
+      let characters = input.split('');
       for (let i = characters.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        let j = Math.floor(Math.random() * (i + 1));
         [characters[i], characters[j]] = [characters[j], characters[i]];
       }
       return characters.join('');
@@ -75,33 +76,33 @@ export class MixedGameComponent {
 
   checkAnswer(): void {
     if (!this.currentCategory || this.wordsIndex >= this.currentCategory.words.length) {
-      console.error("Game not properly initialized or all words have been guessed.");
+      alert("Game not properly initialized or all words have been guessed.");
       return;
     }
-  
+
     const currentWord = this.currentCategory.words[this.wordsIndex];
     const isCorrect = this.userAnswer.toLowerCase() === currentWord.origin.toLowerCase();
-  
-    
     this.wordResults.push({
       word: currentWord.origin,
       translation: currentWord.target,
       isCorrect: isCorrect
     });
-  
-    
-    this.wordsIndex++;
-  
-    if (this.wordsIndex < this.currentCategory.words.length) {
-      this.updateWord();
-      this.updateProgress();
+
+    if (isCorrect) {
+      this.totalCorrectAnswers++;
+      this.wordsIndex++;
+      if (this.wordsIndex < this.currentCategory.words.length) {
+        this.updateWord();
+        this.updateProgress();
+      } else {
+        this.finishGame();
+      }
     } else {
-      this.finishGame();
+      alert('Wrong answer.');
+      
     }
-  
-    this.userAnswer = '';
+    this.userAnswer = ''; 
   }
-  
   
 
   updateWord(): void {
@@ -121,7 +122,7 @@ export class MixedGameComponent {
    
   }
   saveGameResults(gamePlayed: GamePlayed): void {
-    const games = this.listGames();
+    let games = this.listGames();
     games.push(gamePlayed);
     localStorage.setItem('gamesPlayed', JSON.stringify(games));
   }
