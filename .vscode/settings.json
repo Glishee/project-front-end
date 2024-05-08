@@ -3,5 +3,6 @@
     "angular-*": {
       "externalTemplate": true
     }
-  }
+  },
+  "cSpell.words": ["webframeworks"]
 }
