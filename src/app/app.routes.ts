@@ -10,6 +10,8 @@ import { MixedGameComponent } from './mixed-game-mudule/mixed-game/mixed-game.co
 import { PlayGameComponent } from './play-game/play-game.component';
 import { WordSorterResultComponent } from './word-sorter-module/word-sorter-result/word-sorter-result.component';
 import { WordSorterComponent } from './word-sorter-module/word-sorter/word-sorter.component';
+import { DashboardComponent } from './Dashboard/dashboard/dashboard.component'
+import { HelpPageComponent } from './help-page/help-page/help-page.component'
 
 export const routes: Routes = [
   { path: 'category/:id', component: FormCComponent },
@@ -17,11 +19,14 @@ export const routes: Routes = [
   { path: 'admin', component: PlayGameComponent },
   { path: 'game/:category', component: GameComponent },
   { path: 'dialog', component: ChooseGameDialogComponent },
-  { path: '', component: CategoryListComponent },
+  { path: 'listCategory', component: CategoryListComponent },
   { path: 'matching-game/:id', component: MatchingGameComponent },
   { path: 'exit', component: ExitComponent },
   { path: 'mixed-game/:id', component: MixedGameComponent },
   { path: 'mixed-game-results/:id', component: MixedGameResultComponent },
   { path: 'word-sorter/:id', component: WordSorterComponent },
-  { path: 'word-sorter-result/:id', component: WordSorterResultComponent }
+  { path: 'word-sorter-result', component: WordSorterResultComponent },
+  {path: '', component: DashboardComponent },
+  { path: 'help-page', component: HelpPageComponent },
+  
 ];

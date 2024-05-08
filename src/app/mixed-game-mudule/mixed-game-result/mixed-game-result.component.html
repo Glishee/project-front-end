@@ -1,5 +1,15 @@
-<h1>Mixed Letters - {{currentCategory}} - Results</h1>
-<h6>Grade: </h6>
-<h6>You translated {{userAnswer }} of {{ userAnswer }} words correctly</h6>
-<h4>Origin: </h4>
-<button mat-flat-button color="accent" >NEW GAME</button>
+<div class="game-results">
+  <h1>Mixed Letters - {{ currentCategory }} - Results</h1>
+  <h6>Grade: {{ (totalCorrectAnswers / totalWords * 100) | number:'1.0-2' }}%</h6>
+  <h6>You translated {{ totalCorrectAnswers }} out of {{ totalWords }} words correctly</h6>
+  <ul>
+    <li *ngFor="let word of wordResults; let i = index">
+      <div>
+        Source: {{ word.word }} - Translation: {{ word.translation }}
+        <span *ngIf="word.isCorrect">✔️</span>
+        <span *ngIf="!word.isCorrect">❌</span>
+      </div>
+    </li>
+  </ul>
+  <button mat-button (click)="restartGame()">NEW GAME</button>
+</div>

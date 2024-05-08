@@ -1,3 +1,46 @@
-:host {
-  display: block;
+/* Стили для компонента результатов игры */
+.game-results {
+  max-width: 600px; /* Максимальная ширина контейнера */
+  margin: 20px auto; /* Выравнивание по центру и отступ сверху и снизу */
+  padding: 20px; /* Внутренние отступы */
+  border: 2px solid #ccc; /* Рамка вокруг результатов */
+  border-radius: 10px; /* Скругленные углы для рамки */
+  background-color: #f9f9f9; /* Светлый фон для контейнера */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Тень для объемности */
+  text-align: center; /* Выравнивание текста по центру */
 }
+
+.game-results h1, .game-results h6 {
+  margin: 10px 0; /* Отступы сверху и снизу для заголовков */
+  color: #333; /* Цвет текста */
+}
+
+.game-results ul {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding: 0; /* Убираем внутренние отступы у списка */
+}
+
+.game-results li {
+  border-bottom: 1px solid #eee; /* Разделительные линии между элементами списка */
+  padding: 10px 0; /* Отступы для каждого элемента списка */
+}
+
+.game-results span {
+  margin-left: 10px; /* Отступ для значков */
+  font-size: 1.2rem; /* Увеличенный размер значков */
+}
+
+button {
+  background-color: #007BFF; /* Синий цвет кнопки */
+  color: white; /* Белый текст на кнопке */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  border: none; /* Убираем рамку кнопки */
+  border-radius: 5px; /* Скругление углов кнопки */
+  cursor: pointer; /* Курсор в виде руки при наведении */
+  margin-top: 20px; /* Отступ сверху для кнопки */
+}
+
+button:hover {
+  background-color: #0056b3; /* Темно-синий цвет при наведении */
+}
+

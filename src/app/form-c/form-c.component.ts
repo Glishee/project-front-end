@@ -58,7 +58,7 @@ export class FormCComponent implements OnInit {
     } else {
       this.categoryService.add(this.currentCategory);
     }
-    this.router.navigate(['/']);
+    this.router.navigate(['/listCategory']);
   }
   addWord(): void {
     this.currentCategory.words.push(new TranslatedWord('', ''));

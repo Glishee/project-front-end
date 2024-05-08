@@ -1,6 +1,18 @@
 .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 0;
   width: 100%;
-  text-align: center; 
+  text-align: center;
+  padding: 10px 20px; 
+}
+
+.toolbar-content {
+  flex: 1; 
+}
+
+.toolbar-icon {
+  margin-left: auto;
 }

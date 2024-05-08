@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog'
 import { WordSorterDialogComponent } from '../word-sorter-dialog/word-sorter-dialog.component'
 import { TranslatedWord } from '../../shared/model/Translated-Word'
 import { WordSorterResultComponent } from '../word-sorter-result/word-sorter-result.component'
+import { GamePlayed } from '../../shared/model/GamePlayed'
+import { ScorePointService } from '../../Services/scorePoint.service'
 
 @Component({
   selector: 'app-word-sorter',
@@ -22,137 +24,98 @@ import { WordSorterResultComponent } from '../word-sorter-result/word-sorter-res
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WordSorterComponent implements OnInit {
-  @Input() id?: string;
-  currentCategory: Category1 = new Category1(0, '', Language.English, Language.Hebrew);
-  currentWord?: TranslatedWord;
-  wordIndex: number = 0;
-  correctAnswers: number = 0;
-  totalQuestions: number = 0;
-  allAnswer: number = 0 
-  progressValue: number = 0;
-  guesses: { word: string; isCorrect: boolean }[] = [];
-  gameEnded = false
+  currentCategory?: Category1;
+  allWords: string[] = []; 
+  gameWords: { word: string, isCorrect?: boolean }[] = [];
+  wordIndex = 0;
+  correctAnswers = 0;
+  totalQuestions = 6;
+  gameEnded = false;
+  WORD_PER_CATEGORY = 6;
 
   constructor(
     private categoryService: CategoryService,
+    private scorePointService: ScorePointService,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
-    this.initializeCategory();
+  ngOnInit() {
+    this.selectRandomCategory(); 
+    this.collectAllWords(); 
+    this.selectRandomWords(); // Выбираем слова для игры
   }
-
-  initializeCategory(): void {
-    if (this.id) {
-      const categoryId = parseInt(this.id);
-      if (!isNaN(categoryId)) {
-        const category = this.categoryService.get(categoryId);
-        if (category) {
-          this.currentCategory = category;
-          this.totalQuestions = this.currentCategory.words.length;
-          this.prepareNextWord();
-        } else {
-          console.error(`Category not found with ID ${categoryId}`);
-        }
-      } else {
-        console.error('Invalid category ID:', this.id);
-      }
-    }
-  }
-
-  private selectRandomWords(words: TranslatedWord[], count: number): TranslatedWord[] {
-    return words.sort(() => 0.5 - Math.random()).slice(0, count);
-  }
-
-  private shuffleWords(words: TranslatedWord[]): TranslatedWord[] {
-    for (let i = words.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [words[i], words[j]] = [words[j], words[i]];
-    }
-    return words;
-  }
-
-  addExtraWords(): void {
+ 
+  selectRandomCategory() {
     const allCategories = this.categoryService.list(); 
-    let allWords: TranslatedWord[] = [];
-  
-   
-    allCategories.forEach(cat => {
-      allWords = allWords.concat(cat.words);
-    });
-  
-    if (allWords.length < 6) {
-      console.error('Not enough words available to play the game.');
-      return; 
+    if (allCategories.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allCategories.length);
+        this.currentCategory = allCategories[randomIndex]; 
+    } else {
+        this.currentCategory = undefined; 
     }
-  
-   
-    allWords = this.selectRandomWords(allWords, 6);
-  
-   
-    this.currentCategory.words = allWords;
-    this.shuffleWords(this.currentCategory.words);
-    this.totalQuestions = this.currentCategory.words.length;
+}
+  collectAllWords() {
+    const allCategories = this.categoryService.list();
+    allCategories.forEach(category => {
+      this.allWords.push(...category.words.map(word => word.origin));
+    });
+    this.shuffleArray(this.allWords); 
+  }
+
+  selectRandomWords() {
+    this.shuffleArray(this.allWords);
+    this.gameWords = this.allWords.slice(0, this.WORD_PER_CATEGORY).map(word => ({ word, isCorrect: undefined }));
     this.wordIndex = 0;
-    this.prepareNextWord();
   }
+
+  processAnswer(isCorrect: boolean) {
+    const currentWordEntry = this.gameWords[this.wordIndex];
+    const isInCategory = this.currentCategory?.words.some(word => word.origin === currentWordEntry.word);
   
-
-  prepareNextWord(): void {
-    if (this.currentCategory && this.wordIndex < this.totalQuestions) {
-      this.currentWord = this.currentCategory.words[this.wordIndex];
-      this.progressValue = (this.wordIndex / this.totalQuestions) * 100;
-      this.wordIndex++;
-    } else {
-      this.completeGame();
-    }
-  }
-
-  processAnswer(isCorrect: boolean): void {
-    const correctAnswer = this.currentCategory?.words.some(w => w.target === this.currentWord?.target);
-    if (isCorrect === correctAnswer) {
+    if (isCorrect === isInCategory) {
       this.correctAnswers++;
-      this.correctGuessDialog();
+      currentWordEntry.isCorrect = true;
+      this.openDialog('You answered correctly!');
     } else {
-      this.incorrectGuessDialog();
+      currentWordEntry.isCorrect = false;
+      this.openDialog('Your answer was incorrect.');
     }
-    this.prepareNextWord();
-  }
-
-  private correctGuessDialog(): void {
-    this.dialog.open(WordSorterDialogComponent, {
-      data: {
-        title: 'Correct!',
-        message: 'Nice job! Ready for the next word?',
-        buttonText: 'Continue',
-        dialogType: 'success'
-      },
-    });
-  }
-
-  private completeGame(): void {
-    this.dialog.open(WordSorterDialogComponent, {
-      data: {
-        title: 'Game Complete!',
-        message: `You've finished all words in ${this.currentCategory?.name}.`,
-        buttonText: 'See Results',
-        dialogType: 'complete'
-      },
-    });
-    this.gameEnded = true
-  }
-
-  private incorrectGuessDialog(): void {
-    this.dialog.open(WordSorterDialogComponent, {
-      data: {
-        title: 'Oops!',
-        message: 'That was not quite right. Try the next one!',
-        buttonText: 'Next',
-        dialogType: 'error'
-      },
-    });
-  }
-
   
+    this.wordIndex++;
+    if (this.wordIndex >= this.gameWords.length) {
+      this.endGame();
+    }
+  }
+
+  openDialog(message: string): void {
+    this.dialog.open(WordSorterDialogComponent, {
+      width: '250px',
+      data: { message: message }
+    });
+  }
+
+
+  endGame() {
+    this.gameEnded = true;
+    if (this.currentCategory) {
+      this.scorePointService.addGamePlayed({
+        categoryId: this.currentCategory.id,
+        gameId: Math.floor(Math.random() * 10000),
+        datePlayedGame: new Date(),
+        scorePoint: this.correctAnswers
+      });
+    }
+  }
+
+  shuffleArray(array: string[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  progressValue() {
+    return (this.wordIndex / this.totalQuestions) * 100;
+  }
 }
 

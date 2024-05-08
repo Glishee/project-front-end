@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { GameService } from '../../Services/game.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { GamePlayed } from '../../shared/model/GamePlayed'
+import { WordResult } from '../word_result/word-result'
 
 @Component({
   selector: 'app-mixed-game-result',
@@ -19,12 +20,16 @@ import { GamePlayed } from '../../shared/model/GamePlayed'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MixedGameResultComponent {
-  @Input() currentCategory?: string
-  wordToShow?: string;
-  @Input() shuffledString?: string;
+  @Input() id?: number;
+  @Input() currentCategory?: string;
+  @Input() totalCorrectAnswers: number = 0;
+  @Input() totalWords: number = 0;
   @Input() userAnswer: string = '';
-  @Input() wordsIndex: number = 0;
-  @Input() progressValue: number = 0;
-
-  
+  @Input() wordResults: WordResult[] = [];
+  constructor(
+    private router: Router
+  ) {}
+  restartGame(): void {
+    this.router.navigate(['/mixed-game']);
+  }
 }

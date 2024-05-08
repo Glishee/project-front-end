@@ -16,20 +16,10 @@ import { CategoryService } from '../../Services/category.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WordSorterResultComponent {
-  @Input() currentCategory: Category1 = new Category1(0, '', Language.English, Language.Hebrew);
-  @Input() currentWord: TranslatedWord[] = [];
-  @Input() correctAnswers: number = 0;
-  @Input() totalQuestions: number = 0;
-  @Input() allAnswer: number = 0 
-  @Input() guesses: { index: number; guess: string; isCorrect: boolean }[] = [];
-  constructor(
-    private categoryService: CategoryService,
-    private router: Router
-  ) {}
+  @Input() currentCategory!: Category1;
+  @Input() correctAnswers!: number;
+  @Input() totalQuestions!: number;
+  @Input() gameWords!: { word: string, isCorrect?: boolean }[];
 
-  wasCorrectGuess(index: number): boolean {
-    const foundGuess = this.guesses.find((g) => g.index === index);
-    return foundGuess ? foundGuess.isCorrect : false;
-  }
-
+  constructor() { }
 }

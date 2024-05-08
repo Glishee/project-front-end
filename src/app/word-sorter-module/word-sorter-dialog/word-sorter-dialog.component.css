@@ -1,3 +1,27 @@
-:host {
-  display: block;
+::ng-deep .mat-dialog-container {
+  max-width: 80vw; 
+  width: auto; 
+  padding: 20px; 
+  box-sizing: border-box; 
+}
+
+::ng-deep .mat-dialog-title {
+  color: #333;
+  font-size: 24px; 
+  margin-bottom: 15px;
+}
+
+::ng-deep .mat-dialog-content {
+  color: #666; 
+  font-size: 16px; 
+  margin-bottom: 20px; 
+}
+
+::ng-deep .mat-dialog-actions {
+  justify-content: center; 
+}
+
+::ng-deep button.mat-button {
+  min-width: 100px;
+  margin: 0 10px; 
 }

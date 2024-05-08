@@ -1,12 +1,17 @@
-<div *ngIf="!gameEnded">
-<h1>Word Sorter - {{ currentCategory.name }}</h1>
-<h3>Is the word "{{ currentWord?.target }}" part of the category "{{ currentCategory.name }}"?</h3>
-<div class="example-button-row">
-  <button mat-flat-button color="primary" (click)="processAnswer(true)">YES</button>
-  <button mat-flat-button color="accent" (click)="processAnswer(false)">NO</button>
-  <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+<div *ngIf="!gameEnded && currentCategory" class="game-container">
+  <h1>Word Sorter - {{ currentCategory.name }}</h1>
+  <h3>Is the word "{{ gameWords[wordIndex].word }}" part of the category "{{ currentCategory.name }}"?</h3>
+  <div class="example-button-row">
+    <button mat-flat-button color="primary" (click)="processAnswer(true)">YES</button>
+    <button mat-flat-button color="accent" (click)="processAnswer(false)">NO</button>
+    <mat-progress-bar mode="determinate" [value]="progressValue()"></mat-progress-bar>
+  </div>
 </div>
-</div>
-<div *ngIf="gameEnded">
-  <app-word-sorter-result [currentCategory]="currentCategory" [correctAnswers]="correctAnswers" [totalQuestions]="totalQuestions"></app-word-sorter-result>
+<div *ngIf="gameEnded && currentCategory">
+  <app-word-sorter-result 
+    [currentCategory]="currentCategory"
+    [correctAnswers]="correctAnswers"
+    [totalQuestions]="totalQuestions"
+    [gameWords]='gameWords'>
+  </app-word-sorter-result>
 </div>
