@@ -1,0 +1,23 @@
+.cards-container {
+  display: flex;
+  justify-content: space-between; /* Размещает контейнеры на противоположных концах */
+  align-items: flex-start; /* Выравнивает контейнеры по верхнему краю */
+  width: 100%; /* Задает полную ширину контейнеру */
+}
+
+.origin-cards, .target-cards {
+  flex: 1; /* Разделяет доступное пространство поровну между двумя контейнерами */
+  padding: 8px; /* Добавляет отступы внутри каждого контейнера */
+}
+
+.word-card {
+  margin: 8px; /* Добавляет небольшой отступ вокруг каждой карточки */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.word-card:hover {
+  transform: scale(1.05);
+}
+.word-card.selected {
+  border: 2px solid blue; /* Выделение выбранной карточки */
+}

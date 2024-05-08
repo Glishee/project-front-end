@@ -1,0 +1,14 @@
+<h1>Word Sorter - {{ currentCategory.name }} - Results</h1>
+<h6>You classified {{ correctAnswers }} out of {{ totalQuestions }} words correctly</h6>
+<div>
+  <h3>Guesses:</h3>
+  <ul>
+    <div class="translated-words">
+      <div *ngFor="let word of currentWord; let i = index" class="word-pair">
+        <div class="source-word">Source: {{ word.origin }}</div>
+        <div class="target-word">Target: {{ word.target }}</div>
+        <span *ngIf="wasCorrectGuess(i)">✔️</span>
+        <span *ngIf="!wasCorrectGuess(i)">❌</span>
+      </div>
+<button mat-flat-button color="accent" >NEW GAME</button>
+

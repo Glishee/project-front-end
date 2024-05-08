@@ -10,4 +10,5 @@ export class GamePlayed {
 		this.gameId = gameId;
 		this.scorePoint = scorePoint 
 	}
+
 }

@@ -15,7 +15,7 @@ export class CategoryService {
   }
 
   private getNextId(): number {
-    let nextIdString = localStorage.getItem(this.NEXT_ID_KEY);
+    const nextIdString = localStorage.getItem(this.NEXT_ID_KEY);
 
     return nextIdString ? parseInt(nextIdString) : 0;
   }
@@ -32,8 +32,8 @@ export class CategoryService {
   }
 
   private getCategory(): Map<number, Category1> {
-    let categoryString = localStorage.getItem(this.CATEGORY_KEY);
-    let idToCategory = new Map<number, Category1>();
+    const categoryString = localStorage.getItem(this.CATEGORY_KEY);
+    const idToCategory = new Map<number, Category1>();
 
     if (categoryString) {
       JSON.parse(categoryString).forEach((category: Category1) => {
@@ -63,7 +63,7 @@ export class CategoryService {
   }
 
   delete(id: number): void {
-    let categoryMap = this.getCategory();
+    const categoryMap = this.getCategory();
     if (!categoryMap.delete(id)) {
       throw new Error('Failed to delete category by id: ' + id);
     }
@@ -71,9 +71,9 @@ export class CategoryService {
     this.loadCategories();
   }
 
-  update(category: Category1): void  {
-    let categoryMap = this.getCategory();
-    if (!this.categories.has(category.id)) {
+  update(category: Category1): void {
+    const categoryMap = this.getCategory();
+    if (!categoryMap.has(category.id)) { 
       throw new Error('Failed to update category by id: ' + category.id);
     }
     categoryMap.set(category.id, category);
@@ -84,7 +84,7 @@ export class CategoryService {
     let nextId = this.getNextId();
     newCategoryData.id = nextId;
 
-    let categories = this.getCategory();
+    const categories = this.getCategory();
     categories.set(nextId, newCategoryData);
     this.setCategory(categories);
 
@@ -109,4 +109,5 @@ export class CategoryService {
     );
     return categoryObject ? categoryObject.words.map((word) => word.origin) : [];
   }
+  
 }

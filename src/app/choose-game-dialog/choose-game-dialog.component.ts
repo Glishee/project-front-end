@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {Component, Inject, OnInit} from '@angular/core';
 import {
-  MatDialog,
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogTitle,
@@ -18,6 +17,7 @@ import { GameService } from '../Services/game.service'
 import { GameProfile } from '../shared/model/GameProfile'
 import { Router } from '@angular/router'
 export interface DialogData {
+  message: string
   animal: string;
   name: string;
 }

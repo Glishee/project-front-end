@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
-  selector: 'app-mixed-words',
+  selector: 'app-exit',
   standalone: true,
   imports: [
-    CommonModule,
+    CommonModule, MatIconModule
   ],
-  templateUrl: './mixed-words.component.html',
-  styleUrl: './mixed-words.component.css',
+  templateUrl: './exit.component.html',
+  styleUrl: './exit.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MixedWordsComponent { }
+export class ExitComponent { }

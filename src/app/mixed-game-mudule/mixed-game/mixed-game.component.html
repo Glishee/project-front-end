@@ -1,0 +1,21 @@
+<div class='game'><h1>Mixed Letters - {{currentCategory.name}}</h1>
+
+<h2>Target Word: {{wordToShow}}</h2>
+<h2>Guess: {{shuffledString}}</h2>
+
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Enter your guess</mat-label>
+    <input matInput placeholder="Type here" [(ngModel)]="userAnswer" name="userAnswer">
+  </mat-form-field>
+  
+  <section>
+    <div class="example-button-row">
+      <button mat-flat-button color="primary" (click)="wordsIndex = 0; updateWord()">RESET</button>
+      <button mat-flat-button color="accent" (click)="checkAnswer()">SUBMIT</button>
+    </div>
+  </section>
+  <mat-progress-bar mode="determinate" [value]="progressValue" class='bar'></mat-progress-bar>
+</form>
+</div>
+
