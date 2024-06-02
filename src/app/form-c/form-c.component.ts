@@ -28,7 +28,7 @@ import { TranslatedWord } from '../shared/model/Translated-Word';
 })
 export class FormCComponent implements OnInit {
   currentCategory: Category1 = new Category1(
-    0,
+    '',
     '',
     Language.English,
     Language.Hebrew
@@ -43,22 +43,28 @@ export class FormCComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.id) {
-      const serviceCategory = this.categoryService.get(parseInt(this.id));
+      this.categoryService.get(this.id).then(
+        (category: Category1 | undefined) => {
 
-      if (serviceCategory) {
-        this.currentCategory = serviceCategory;
+      if (category) {
+        this.currentCategory = category;
       }
     }
+      )
   }
+}
 
   onSubmitRegistration() {
     console.log('Form submitted!');
     if (this.id) {
-      this.categoryService.update(this.currentCategory);
+      this.categoryService.update(this.currentCategory).then(
+        () => this.router.navigate(['/listCategory'])
+      );
     } else {
-      this.categoryService.add(this.currentCategory);
+      this.categoryService.add(this.currentCategory).then(
+        () => this.router.navigate(['/listCategory'])
+      );
     }
-    this.router.navigate(['/listCategory']);
   }
   addWord(): void {
     this.currentCategory.words.push(new TranslatedWord('', ''));

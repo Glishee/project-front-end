@@ -1,4 +1,5 @@
-<div *ngIf="!gameEnded && currentCategory" class="game-container">
+<div *ngIf="!gameEnded && currentCategory && gameWords.length > 0" class="game-container">
+  <app-timer [initialTime]="70" (timerEnd)="onTimerEnd()"></app-timer>
   <h1>Word Sorter - {{ currentCategory.name }}</h1>
   <h3>Is the word "{{ gameWords[wordIndex].word }}" part of the category "{{ currentCategory.name }}"?</h3>
   <div class="example-button-row">
@@ -12,6 +13,11 @@
     [currentCategory]="currentCategory"
     [correctAnswers]="correctAnswers"
     [totalQuestions]="totalQuestions"
-    [gameWords]='gameWords'>
+    [gameWords]="gameWords"
+    [gameEndMessage]="gameEndMessage"
+    [score]="calculateScore(correctAnswers, totalQuestions)">
   </app-word-sorter-result>
+</div>
+<div *ngIf="errorMessage" class="error-message">
+  <h1>{{ errorMessage }}</h1>
 </div>

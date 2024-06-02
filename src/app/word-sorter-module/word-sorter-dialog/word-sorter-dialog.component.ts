@@ -4,6 +4,7 @@ import { DialogData } from '../../choose-game-dialog/choose-game-dialog.componen
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatButtonModule } from '@angular/material/button'
 
+
 @Component({
   selector: 'app-word-sorter-dialog',
   standalone: true,

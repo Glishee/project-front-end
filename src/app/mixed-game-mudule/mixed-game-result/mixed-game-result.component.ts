@@ -20,16 +20,11 @@ import { WordResult } from '../word_result/word-result'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MixedGameResultComponent {
-  @Input() id?: number;
   @Input() currentCategory?: string;
   @Input() totalCorrectAnswers: number = 0;
   @Input() totalWords: number = 0;
   @Input() userAnswer: string = '';
   @Input() wordResults: WordResult[] = [];
-  constructor(
-    private router: Router
-  ) {}
-  restartGame(): void {
-    this.router.navigate(['/mixed-game']);
-  }
+
+  constructor() {}
 }

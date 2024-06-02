@@ -20,6 +20,8 @@ export class WordSorterResultComponent {
   @Input() correctAnswers!: number;
   @Input() totalQuestions!: number;
   @Input() gameWords!: { word: string, isCorrect?: boolean }[];
+  @Input() gameEndMessage!: string;
+  @Input() score!: number;
 
   constructor() { }
 }

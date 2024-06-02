@@ -7,4 +7,16 @@
     <h3>Total Points Earned</h3>
     <p>{{ totalPointsEarned }}</p>
   </div>
+  <div class="dashboard-item">
+    <h3>Total Hours Played</h3>
+    <p>{{ totalHoursPlayed | number:'1.1-1' }}</p>
+  </div>
+  <div class="dashboard-item">
+    <h3>Average Game Duration (minutes)</h3>
+    <p>{{ averageGameDuration | number:'1.1-1' }}</p>
+  </div>
+  <div class="dashboard-item">
+    <h3>Percentage of Games Completed Before Timeout</h3>
+    <p>{{ percentGamesCompleted | number:'1.1-1' }}%</p>
+  </div>
 </div>

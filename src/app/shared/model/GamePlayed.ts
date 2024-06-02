@@ -1,13 +1,17 @@
 export class GamePlayed {
-  categoryId: number;
-  gameId: number;
+  categoryId: string;
+  gameId: string;
   datePlayedGame: Date;
-  scorePoint: number;
+  scorePoint: string;
+  duration: string; 
+  isTimedOut: boolean;
 
-  constructor(scorePoint: number, categoryId: number, gameId: number, datePlayedGame: Date = new Date()) {
+  constructor(scorePoint: string, categoryId: string, gameId: string, duration: string, isTimedOut: boolean, datePlayedGame: Date = new Date()) {
     this.categoryId = categoryId;
     this.gameId = gameId;
     this.scorePoint = scorePoint;
+    this.duration = duration;
+    this.isTimedOut = isTimedOut;
     this.datePlayedGame = datePlayedGame;
   }
 }

@@ -1,4 +1,5 @@
-<div *ngIf="!gameEnded && currentCategory" class='game'>
+<div *ngIf="!gameEnded && currentCategory && !errorMessage" class='game'>
+  <app-timer [initialTime]="70" (timerEnd)="onTimerEnd()"></app-timer>
   <h1>Mixed Letters - {{currentCategory.name}}</h1>
   <h2>Target Word: {{wordToShow}}</h2>
   <h2>Guess: {{shuffledString}}</h2>
@@ -19,7 +20,7 @@
   </form>
 </div>
 
-<div *ngIf="gameEnded && currentCategory">
+<div *ngIf="gameEnded && currentCategory && !errorMessage">
   <app-mixed-game-result 
     [currentCategory]="currentCategory.name"
     [totalCorrectAnswers]="totalCorrectAnswers"
@@ -27,4 +28,9 @@
     [userAnswer]="userAnswer"
     [wordResults]="wordResults">
   </app-mixed-game-result>
+  <button mat-button (click)="restartGame()">NEW GAME</button>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  <h1>{{ errorMessage }}</h1>
 </div>

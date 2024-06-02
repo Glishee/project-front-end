@@ -1,6 +1,8 @@
 <div class="game-results">
   <h1>Word Sorter - {{ currentCategory.name }} - Results</h1>
+  <h2>{{ gameEndMessage }}</h2>
   <h6>You classified {{ correctAnswers }} out of {{ totalQuestions }} words correctly</h6>
+  <h6>Your score: {{ score }}%</h6>
   <div>
     <h3>Guesses:</h3>
     <ul>
@@ -13,6 +15,6 @@
       </li>
     </ul>
   </div>
-  <button mat-flat-button color="accent">NEW GAME</button>
+ 
 </div>
 

@@ -29,22 +29,27 @@ export class CategoryListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categories = this.categoryService.list();
+    this.categoryService
+    .list()
+    .then((result: Category1[]) => (this.categories = result));
   }
 
   displayedColumns: string[] = ['name', 'Words', 'Date', 'actions'];
   categories: Category1[] = [];
 
 
-  deleteCategory(id: number, name: string) {
+  deleteCategory(id: string, name: string) {
     const dialogRef = this.dialog.open(DeleteCategoryDialogComponent, {
       data: name,
     });
 
     dialogRef.afterClosed().subscribe((deletionConfirmed) => {
       if (deletionConfirmed) {
-        this.categoryService.delete(id);
-        this.categories = this.categoryService.list();
+        this.categoryService.delete(id).then(() => {
+          this.categoryService.list().then(
+            (result: Category1[]) =>
+              this.categories = result)
+        })
       }
     });
   }

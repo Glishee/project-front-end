@@ -36,7 +36,9 @@ export class PlayGameComponent implements OnInit {
   
   }
   ngOnInit(): void{
-    this.categories = this.categoryService.list()
+    this.categoryService
+    .list()
+    .then((result: Category1[]) => (this.categories = result));
   }
   chooseGame(c:Category1): void{
     const dialogRef = this.dialog.open(ChooseGameDialogComponent, {data: c.id})
